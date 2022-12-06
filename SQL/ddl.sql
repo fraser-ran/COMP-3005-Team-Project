@@ -48,25 +48,25 @@ CREATE TABLE Customer(
 );
 
 create table cusomter-sales
-	(s_id			CHAR(9), 
-	 u_id			CHAR(9),
+	(s_id			int, 
+	 u_id			int,
 	 primary key (s_id, u_id),
-	 foreign key (u_id) references cusomter,
-	 foreign key (s_id) references sales
+	 foreign key (u_id) references Cusomter,
+	 foreign key (s_id) references Sales
 	);
 
 create table book-sales
-	(s_id			CHAR(9), 
-	 ISBN			CHAR(9),
+	(s_id			int, 
+	 ISBN			int,
 	 primary key (s_id, ISBN),
-	 foreign key (ISBN) references book,
-	 foreign key (s_id) references sales
+	 foreign key (ISBN) references Book,
+	 foreign key (s_id) references Sales
 	);
 
 create table sales-publisher	
-	(s_id			CHAR(9), 
-	 p_id			CHAR(9),
+	(s_id			int, 
+	 p_id			int,
 	 primary key (s_id, p_id),
-	 foreign key (p_id) references publisher,
-	 foreign key (u_id) references sales
+	 foreign key (p_id) references Publisher,
+	 foreign key (u_id) references Sales
 	);
