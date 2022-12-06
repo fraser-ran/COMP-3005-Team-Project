@@ -18,5 +18,22 @@
         "titleBar.inactiveBackground": "#007fff99",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#007fff"
+    "peacock.color": "#007fff",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:COMP-3005-Team-Project}/SQL/ddl.sql",
+            "name": "3005-fraser",
+            "group": "3005-project"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:COMP-3005-Team-Project}/SQL/ddl.sql",
+            "name": "fraser",
+            "group": "3005 project"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }
