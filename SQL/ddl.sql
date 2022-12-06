@@ -46,3 +46,27 @@ CREATE TABLE Customer(
     billing_country varchar(255),
     PRIMARY KEY(u_id)
 );
+
+create table cusomter-sales
+	(s_id			CHAR(9), 
+	 u_id			CHAR(9),
+	 primary key (s_id, u_id),
+	 foreign key (u_id) references cusomter,
+	 foreign key (s_id) references sales
+	);
+
+create table book-sales
+	(s_id			CHAR(9), 
+	 ISBN			CHAR(9),
+	 primary key (s_id, ISBN),
+	 foreign key (ISBN) references book,
+	 foreign key (s_id) references sales
+	);
+
+create table sales-publisher	
+	(s_id			CHAR(9), 
+	 p_id			CHAR(9),
+	 primary key (s_id, p_id),
+	 foreign key (p_id) references publisher,
+	 foreign key (u_id) references sales
+	);
