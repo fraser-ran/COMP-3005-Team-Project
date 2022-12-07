@@ -332,4 +332,64 @@ def searchPublisherByEmail(email):
         if cnn:
             cnn.close()
         print('done...')
+
+def searchLikeName(likeName):
+
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        line = ("SELECT * FROM Book WHERE title LIKE " + "'%" + likeName + "%'")
+        sql = line
+        cs = cnn.cursor()
+        cs.execute(sql)
+        rst = cs.fetchall()
+        print(rst)
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def searchLikeAuthor(likeAuthor):
+
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        line = ("SELECT * FROM Book WHERE author LIKE " + "'%" + likeAuthor + "%'")
+        sql = line
+        cs = cnn.cursor()
+        cs.execute(sql)
+        rst = cs.fetchall()
+        print(rst)
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def searchLikeGenre(likeGenre):
     
+        cnn = None
+        fileName = 'SQL/books.db'
+        try:
+            cnn = sqlite3.connect(fileName)
+            line = ("SELECT * FROM Book WHERE genre LIKE " + "'%" + likeGenre + "%'")
+            sql = line
+            cs = cnn.cursor()
+            cs.execute(sql)
+            rst = cs.fetchall()
+            print(rst)
+        except Error as e:
+            print("error")
+            print(e)
+        finally:
+            if cnn:
+                cnn.close()
+            print('done...')
+
