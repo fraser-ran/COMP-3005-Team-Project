@@ -2,7 +2,8 @@ import sqlite3
 from sqlite3 import Error
 
 print('starting database.py')
-# ? we are trying to use the execute method to create a table
+#! This only to make the database once after that we will need to make our commands in another file
+# ? this means that if there is a db file in SQL, THIS WILL NOT RUN
 
 cnn = None
 fileName = 'SQL/books.db'
