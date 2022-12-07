@@ -60,14 +60,14 @@ def updateBook(isbn, title, publisher, author_name, genre, num_pages, price):
             cnn.close()
         print('done...')
 
-def searchBook(isbn):
+def searchBook(value, browseBy):
     cnn = None
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("SELECT * FROM Book WHERE isbn = ?")
+        sql = ("SELECT * FROM Book WHERE "+browseBy+" = ?")
         cs = cnn.cursor()
-        cs.execute(sql, (isbn,))
+        cs.execute(sql, (value,))
         rst = cs.fetchall()
         print(rst)
     except Error as e:
