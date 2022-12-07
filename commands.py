@@ -27,16 +27,6 @@ finally:
 #examples of stuff TODO:
 # try: 
 #     cnn = sqlite3.connect('SQL/books.db')
-#     sql = ("CREATE TABLE IF NOT EXISTS Book ("
-#     "    isbn int,"
-#     "    title varchar(255),"
-#     "    publisher varchar(255),"
-#     "    author_name varchar(255),"
-#     "    genre varchar(255),"
-#     "    num_pages int,"
-#     "    price int,"
-#     "    PRIMARY KEY(isbn))")
-#     cs = cnn.cursor()
 #     cs.execute(sql)
 #     print('table created...')
 
