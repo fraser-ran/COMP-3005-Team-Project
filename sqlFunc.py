@@ -296,3 +296,40 @@ def addPublisher(p_id, name, address, email, phoneNum, bankAccount):
             cnn.close()
         print('done...')
 
+
+def searchPublisherByName(name):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT * FROM Publisher WHERE name = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (name,))
+        rst = cs.fetchall()
+        print(rst)
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def searchPublisherByEmail(email):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT * FROM Publisher WHERE email = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (email,))
+        rst = cs.fetchall()
+        print(rst)
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+    
