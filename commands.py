@@ -1,6 +1,9 @@
 import sqlite3
 from sqlite3 import Error
 
+from sqlFunc import *
+
+
 cnn = None
 fileName = 'SQL/books.db'
 
