@@ -39,26 +39,14 @@ CREATE TABLE Users(
     PRIMARY KEY(u_id)
 );
 
-create table cusomter-sales(
-s_id			int, 
-u_id			int,
-primary key (s_id, u_id),
-foreign key (u_id) references Cusomter,
-foreign key (s_id) references Sales
-);
-
-create table book-sales(
-s_id			int, 
-ISBN			int,
-primary key (s_id, ISBN),	 
-foreign key (ISBN) references Book,
-foreign key (s_id) references Sales
-);
-
-create table sales-publisher(
-s_id			int, 
-p_id			int,
-primary key (s_id, p_id),
-foreign key (p_id) references Publisher,
-foreign key (u_id) references Sales
+CREATE TABLE Orders(
+    o_id int,
+    u_id int,
+    p_id int,
+    date DATE,
+    time TIME,
+    cost int,
+    PRIMARY KEY(o_id),
+    FOREIGN KEY (u_id) REFERENCES Users(u_id),
+    FOREIGN KEY (p_id) REFERENCES Publisher(p_id)
 );
