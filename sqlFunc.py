@@ -247,7 +247,7 @@ def searchCustomerByUserName(userName):
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("SELECT * FROM Customer WHERE userName = ?")
+        sql = ("SELECT * FROM Users WHERE userName = ?")
         cs = cnn.cursor()
         cs.execute(sql, (userName,))
         rst = cs.fetchall()
@@ -265,7 +265,7 @@ def searchCustomerByEmail(email):
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("SELECT * FROM Customer WHERE email = ?")
+        sql = ("SELECT * FROM Users WHERE email = ?")
         cs = cnn.cursor()
         cs.execute(sql, (email,))
         rst = cs.fetchall()
