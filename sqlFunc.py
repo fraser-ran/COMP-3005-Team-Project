@@ -69,7 +69,7 @@ def searchBook(value, browseBy):
         cs = cnn.cursor()
         cs.execute(sql, (value,))
         rst = cs.fetchall()
-        print(rst)
+        return rst
     except Error as e:
         print("error")
         print(e)
