@@ -229,7 +229,7 @@ def addCustomer(u_id, userName, email, password, address, country, city, postalC
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("INSERT INTO Customer(u_id, userName, email, password, address, country, city, postalCode, cardName, cardNumber, ccv, exp_Date, billingStreet, billingCity, billingCountry) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        sql = ("INSERT INTO Users(u_id, userName, email, password, address, country, city, postal_code, card_name, card_number, ccv, exp_Date, billing_street, billing_city, billing_country) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
         cs = cnn.cursor()
         cs.execute(sql, (u_id, userName, email, password, address, country, city, postalCode, cardName, cardNumber, ccv, exp_Date, billingStreet, billingCity, billingCountry))
         cnn.commit()
@@ -278,14 +278,15 @@ def searchCustomerByEmail(email):
             cnn.close()
         print('done...')
 
-def addPublisher(p_id, name, address, email, phoneNum, bankAccount):
+def addPublisher(p_id, name, address, email, phone_num, bankAccount):
     cnn = None
     fileName = 'SQL/books.db'
+    print("in add publisher")
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("INSERT INTO Publisher(p_id, name, address, email, phoneNum, bankAccount) VALUES(?, ?, ?, ?, ?, ?)")
+        sql = ("INSERT INTO Publisher(p_id, name, address, email, phone_number, bank_account) VALUES(?, ?, ?, ?, ?, ?)")
         cs = cnn.cursor()
-        cs.execute(sql, (p_id, name, address, email, phoneNum, bankAccount))
+        cs.execute(sql, (p_id, name, address, email, phone_num, bankAccount))
         cnn.commit()
         print('publisher added...')
     except Error as e:
@@ -393,3 +394,4 @@ def searchLikeGenre(likeGenre):
                 cnn.close()
             print('done...')
 
+# def add
