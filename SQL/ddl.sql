@@ -1,6 +1,6 @@
 CREATE TABLE Publisher(
     p_id int,
-    pub_name varchar(255),
+    name varchar(255),
     address varchar(255),
     email varchar(255),
     phone_number varchar(255),
@@ -11,13 +11,13 @@ CREATE TABLE Publisher(
 CREATE TABLE Book(
     isbn int,
     title varchar(255),
-    pub_name varchar(255),
+    publisher varchar(255),
     author_name varchar(255),
     genre varchar(255),
     num_pages int,
     price int,
     PRIMARY KEY(isbn),
-    FOREIGN KEY (pub_name) REFERENCES Publisher(pub_name)
+    FOREIGN KEY (publisher) REFERENCES Publisher(name)
 );
 
 CREATE TABLE Users(
