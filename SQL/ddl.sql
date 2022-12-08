@@ -1,17 +1,6 @@
-CREATE TABLE Book(
-    isbn int,
-    title varchar(255),
-    publisher varchar(255),
-    author_name varchar(255),
-    genre varchar(255),
-    num_pages int,
-    price int,
-    PRIMARY KEY(isbn)
-);
-
 CREATE TABLE Publisher(
     p_id int,
-    name varchar(255),
+    pub_name varchar(255),
     address varchar(255),
     email varchar(255),
     phone_number varchar(255),
@@ -19,16 +8,19 @@ CREATE TABLE Publisher(
     PRIMARY KEY(p_id)
 );
 
-
-CREATE TABLE Sales(
-    s_id int,
-    date DATE,
-    time TIME,
-    cost int,
-    PRIMARY KEY(s_id)
+CREATE TABLE Book(
+    isbn int,
+    title varchar(255),
+    pub_name varchar(255),
+    author_name varchar(255),
+    genre varchar(255),
+    num_pages int,
+    price int,
+    PRIMARY KEY(isbn),
+    FOREIGN KEY (pub_name) REFERENCES Publisher(pub_name)
 );
 
-CREATE TABLE Customer(
+CREATE TABLE Users(
     u_id int,
     username varchar(255),
     password varchar(255),
@@ -47,26 +39,14 @@ CREATE TABLE Customer(
     PRIMARY KEY(u_id)
 );
 
-create table cusomter-sales(
-s_id			int, 
-u_id			int,
-primary key (s_id, u_id),
-foreign key (u_id) references Cusomter,
-foreign key (s_id) references Sales
-);
-
-create table book-sales(
-s_id			int, 
-ISBN			int,
-primary key (s_id, ISBN),	 
-foreign key (ISBN) references Book,
-foreign key (s_id) references Sales
-);
-
-create table sales-publisher(
-s_id			int, 
-p_id			int,
-primary key (s_id, p_id),
-foreign key (p_id) references Publisher,
-foreign key (u_id) references Sales
+CREATE TABLE Orders(
+    o_id int,
+    u_id int,
+    p_id int,
+    date DATE,
+    time TIME,
+    cost int,
+    PRIMARY KEY(o_id),
+    FOREIGN KEY (u_id) REFERENCES Users(u_id),
+    FOREIGN KEY (p_id) REFERENCES Publisher(p_id)
 );
