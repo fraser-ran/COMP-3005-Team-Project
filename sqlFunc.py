@@ -456,3 +456,39 @@ def addToOrder(o_id, u_id, p_id, date, time, cost):
         if cnn:
             cnn.close()
         print('done...')
+
+def checkIfCardisNull(name):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT * FROM Users WHERE card_number IS NULL and name = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (name,))
+        rst = cs.fetchall()
+        print(rst)
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def updateCardInfo(cardNumber, cardName, cardExp, cardCcv, billingStreet, billingCity , billingCountry, name):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("UPDATE Users SET card_number = ?, card_name = ?, card_exp = ?, card_ccv = ?, billing_street = ?, billing_city = ?, billing_country = ? WHERE name = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (cardNumber, cardName, cardExp, cardCcv, billingStreet, billingCity , billingCountry, name))
+        cnn.commit()
+        print('card info updated...')
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
