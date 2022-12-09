@@ -247,7 +247,7 @@ def searchCustomerByUserName(userName):
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("SELECT * FROM Customer WHERE userName = ?")
+        sql = ("SELECT * FROM Users WHERE userName = ?")
         cs = cnn.cursor()
         cs.execute(sql, (userName,))
         rst = cs.fetchall()
@@ -265,7 +265,7 @@ def searchCustomerByEmail(email):
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("SELECT * FROM Customer WHERE email = ?")
+        sql = ("SELECT * FROM Users WHERE email = ?")
         cs = cnn.cursor()
         cs.execute(sql, (email,))
         rst = cs.fetchall()
@@ -394,4 +394,65 @@ def searchLikeGenre(likeGenre):
                 cnn.close()
             print('done...')
 
-# def add
+def getPriceIsbn(isbn):
+    cnn = None
+    fileName = 'SQL/books.db'
+    price =0
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT price FROM Book WHERE isbn = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (isbn,))
+        rst = cs.fetchall()
+        # print(rst)
+        price = rst[0][0]
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+    return price
+
+def getListPricesIsbn(isbnList):
+    cnn = None
+    fileName = 'SQL/books.db'
+    price =0
+    priceList = []
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT price FROM Book WHERE isbn = ?")
+        cs = cnn.cursor()
+        for isbn in isbnList:
+            cs.execute(sql, (isbn,))
+            rst = cs.fetchall()
+            # print(rst)
+            price = rst[0][0]
+            priceList.append(price)
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+    return priceList
+
+def addToOrder(o_id, u_id, p_id, date, time, cost):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("INSERT INTO Orders(o_id, u_id, p_id, date, time, cost) VALUES(?, ?, ?, ?, ?, ?)")
+        cs = cnn.cursor()
+        cs.execute(sql, (o_id, u_id, p_id, date, time, cost))
+        cnn.commit()
+        print('order added...')
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
