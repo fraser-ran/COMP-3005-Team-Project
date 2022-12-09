@@ -2,14 +2,14 @@ import sqlite3
 from sqlite3 import Error
 
 
-def insertBook(isbn, title, publisher, author_name, genre, num_pages, price):
+def insertBook(isbn, title, publisher, author_name, genre, num_pages, price, quantity):
     cnn = None
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("INSERT INTO Book (isbn, title, publisher, author_name, genre, num_pages, price) VALUES (?, ?, ?, ?, ?, ?, ?)")
+        sql = ("INSERT INTO Book (isbn, title, publisher, author_name, genre, num_pages, price, quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
         cs = cnn.cursor()
-        cs.execute(sql, (isbn, title, publisher, author_name, genre, num_pages, price))
+        cs.execute(sql, (isbn, title, publisher, author_name, genre, num_pages, price, quantity))
         cnn.commit()
         print('book added...')
         sql = "select * from Book;"
@@ -42,14 +42,14 @@ def deleteBook(isbn):
             cnn.close()
         print('done...')
     
-def updateBook(isbn, title, publisher, author_name, genre, num_pages, price):
+def updateBook(isbn, title, publisher, author_name, genre, num_pages, price, quantity):
     cnn = None
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("UPDATE Book SET title = ?, publisher = ?, author_name = ?, genre = ?, num_pages = ?, price = ? WHERE isbn = ?")
+        sql = ("UPDATE Book SET title = ?, publisher = ?, author_name = ?, genre = ?, num_pages = ?, price = ?, quantity = ? WHERE isbn = ?")
         cs = cnn.cursor()
-        cs.execute(sql, (title, publisher, author_name, genre, num_pages, price, isbn))
+        cs.execute(sql, (title, publisher, author_name, genre, num_pages, price,quantity, isbn))
         cnn.commit()
         print('book updated...')
     except Error as e:
@@ -485,6 +485,24 @@ def updateCardInfo(cardNumber, cardName, cardExp, cardCcv, billingStreet, billin
         cs.execute(sql, (cardNumber, cardName, cardExp, cardCcv, billingStreet, billingCity , billingCountry, name))
         cnn.commit()
         print('card info updated...')
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def updateQuantity(isbn, quantity):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("UPDATE Book SET quantity = ? WHERE isbn = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (quantity, isbn))
+        cnn.commit()
+        print('quantity updated...')
     except Error as e:
         print("error")
         print(e)
