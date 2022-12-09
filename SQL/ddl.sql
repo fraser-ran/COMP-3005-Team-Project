@@ -36,7 +36,7 @@ CREATE TABLE Users(
     billing_street varchar(255),
     billing_city varchar(255),
     billing_country varchar(255),
-    PRIMARY KEY(u_id)
+    PRIMARY KEY(username)
 );
 
 CREATE TABLE Orders(
@@ -47,6 +47,6 @@ CREATE TABLE Orders(
     time TIME,
     cost int,
     PRIMARY KEY(o_id),
-    FOREIGN KEY (u_id) REFERENCES Users(u_id),
+    FOREIGN KEY (u_id) REFERENCES Users(username),
     FOREIGN KEY (p_id) REFERENCES Publisher(p_id)
 );
