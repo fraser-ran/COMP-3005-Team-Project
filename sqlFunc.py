@@ -223,15 +223,15 @@ def displayBooks():
         print('done...')
 
 #@ param addCustomer (int, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, int, int, Date, varchar, varchar, varchar)
-def addCustomer(u_id, userName, email, password, address, country, city, postalCode, cardName, cardNumber, ccv, exp_Date, billingStreet, billingCity, billingCountry):
+def addCustomer(u_id, username, email, password, address, country, city, postalCode, cardName, cardNumber, ccv, exp_Date, billingStreet, billingCity, billingCountry):
 
     cnn = None
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("INSERT INTO Users(u_id, userName, email, password, address, country, city, postal_code, card_name, card_number, ccv, exp_Date, billing_street, billing_city, billing_country) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        sql = ("INSERT INTO Users(u_id, username, email, password, address, country, city, postal_code, card_name, card_number, ccv, exp_Date, billing_street, billing_city, billing_country) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
         cs = cnn.cursor()
-        cs.execute(sql, (u_id, userName, email, password, address, country, city, postalCode, cardName, cardNumber, ccv, exp_Date, billingStreet, billingCity, billingCountry))
+        cs.execute(sql, (u_id, username, email, password, address, country, city, postalCode, cardName, cardNumber, ccv, exp_Date, billingStreet, billingCity, billingCountry))
         cnn.commit()
         print('customer added...')
     except Error as e:
@@ -247,11 +247,11 @@ def searchCustomerByUserName(userName):
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("SELECT * FROM Users WHERE userName = ?")
+        sql = ("SELECT * FROM Users WHERE username = ?")
         cs = cnn.cursor()
         cs.execute(sql, (userName,))
         rst = cs.fetchall()
-        print(rst)
+        return rst
     except Error as e:
         print("error")
         print(e)
