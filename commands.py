@@ -3,6 +3,7 @@ from sqlite3 import Error
 
 from sqlFunc import *
 
+# for making changes to tables
 
 cnn = None
 fileName = 'SQL/books.db'
@@ -10,10 +11,14 @@ fileName = 'SQL/books.db'
 
 try:
     cnn = sqlite3.connect(fileName)
-    # sql = "" # ? here is where we would make our sql commands
+    sql = "ALTER TABLE Book ADD quantity INT;" # ? here is where we would make our sql commands
     cs = cnn.cursor()
+    cs.executescript(sql)
+    cnn.commit()
+    cs.execute(sql)
+
     # ? the execute method is used to run sql commands we need to have the 'sql' variable set to the command we want to run
-    # cs.execute(sql)
+    cs.execute(sql)
 
 except Error as e:
     print("error")

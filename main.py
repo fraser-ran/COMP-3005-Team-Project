@@ -10,9 +10,9 @@ from sqlFunc import *
 
 if __name__ == "__main__":
     # addPublisher(1, "test Publisher", "test address","emai", "number","1234")
-    insertBook(1, "title","test Publisher", "author", "action", 200, 20)
-    print(searchLikeName('ti'))
-    print(getPriceIsbn(2))
+    insertBook(69, "title","test Publisher", "author", "action", 200, 20,10)
+    # print(searchLikeName('ti'))
+    # print(getPriceIsbn(2))
     pass
 
 
