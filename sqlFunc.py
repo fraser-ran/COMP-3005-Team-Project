@@ -530,3 +530,87 @@ def getOrderCount():
         if cnn:
             cnn.close()
         print('done...')
+
+def getOrders():
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT * FROM Orders")
+        cs = cnn.cursor()
+        cs.execute(sql)
+        rst = cs.fetchall()
+        return rst  
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def getSalesByIsbn(isbn):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT * FROM Sales WHERE isbn = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (isbn))
+        rst = cs.fetchall()
+        return rst  
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def checkSaleEmpty(isbn):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT * FROM Sales WHERE isbn = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (isbn))
+        rst = cs.fetchall()
+        if len(rst) == 0:
+            return True
+        else:
+            return False
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def makeSale(isbn, title, publisher, cost, num_sold, profits):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        if (checkSaleEmpty(isbn)):
+            cnn = sqlite3.connect(fileName)
+            sql = ("INSERT INTO Sales(isbn, title, publisher, cost, num_sold, profits) VALUES(?, ?, ?, ?, ?, ?)")
+            cs = cnn.cursor()
+            cs.execute(sql, (isbn, title, publisher, cost, num_sold, profits))
+            cnn.commit()
+            print('sale added...')
+        
+        else:
+            cnn = sqlite3.connect(fileName)
+            sql = ("UPDATE Sales SET num_sold = ?, profits = ? WHERE isbn = ?")
+            cs = cnn.cursor()
+            cs.execute(sql, (num_sold, profits, isbn))
+            cnn.commit()
+            print('sale updated...')
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
