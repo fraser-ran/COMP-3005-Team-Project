@@ -614,3 +614,22 @@ def makeSale(isbn, cost, num_sold, profits):
         if cnn:
             cnn.close()
         print('done...')
+
+def returnProfits(value, searchBy):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT SUM(profits) FROM Sales WHERE " + searchBy + " = ?, INNER JOIN Book ON Sales.isbn = Book.isbn")
+        cs = cnn.cursor()
+        cs.execute(sql, (value))
+        rst = cs.fetchall()
+        return rst  
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
