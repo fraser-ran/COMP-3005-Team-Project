@@ -439,14 +439,14 @@ def getListPricesIsbn(isbnList):
         print('done...')
     return priceList
 
-def addToOrder(o_id, u_id, p_id, date, time, cost):
+def addToOrder(o_id, u_id, cost):
     cnn = None
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("INSERT INTO Orders(o_id, u_id, p_id, date, time, cost) VALUES(?, ?, ?, ?, ?, ?)")
+        sql = ("INSERT INTO Orders(o_id, u_id, date, time, cost) VALUES(?, ?, CURRENT_DATE, CURRENT_TIME, ?)")
         cs = cnn.cursor()
-        cs.execute(sql, (o_id, u_id, p_id, date, time, cost))
+        cs.execute(sql, (o_id, u_id, cost))
         cnn.commit()
         print('order added...')
     except Error as e:
@@ -462,11 +462,11 @@ def checkIfCardisNull(name):
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("SELECT * FROM Users WHERE card_number IS NULL and name = ?")
+        sql = ("SELECT * FROM Users WHERE card_number IS NULL and username = ?")
         cs = cnn.cursor()
         cs.execute(sql, (name,))
         rst = cs.fetchall()
-        print(rst)
+        return rst  
     except Error as e:
         print("error")
         print(e)
@@ -475,19 +475,21 @@ def checkIfCardisNull(name):
             cnn.close()
         print('done...')
 
-def updateCardInfo(cardNumber, cardName, cardExp, cardCcv, billingStreet, billingCity , billingCountry, name):
+def updateCardInfo(cardNumber, cardName, cardExp, cardCcv, billingStreet, billingCity , billingCountry, username):
     cnn = None
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("UPDATE Users SET card_number = ?, card_name = ?, card_exp = ?, card_ccv = ?, billing_street = ?, billing_city = ?, billing_country = ? WHERE name = ?")
+        sql = ("UPDATE Users SET card_number = ?, card_name = ?, exp_date = ?, ccv = ?, billing_street = ?, billing_city = ?, billing_country = ? WHERE username = ?")
         cs = cnn.cursor()
-        cs.execute(sql, (cardNumber, cardName, cardExp, cardCcv, billingStreet, billingCity , billingCountry, name))
+        cs.execute(sql, (cardNumber, cardName, cardExp, cardCcv, billingStreet, billingCity , billingCountry, username))
         cnn.commit()
         print('card info updated...')
+        return True
     except Error as e:
         print("error")
         print(e)
+        return False
     finally:
         if cnn:
             cnn.close()
@@ -503,6 +505,24 @@ def updateQuantity(isbn, quantity):
         cs.execute(sql, (quantity, isbn))
         cnn.commit()
         print('quantity updated...')
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
+
+def getOrderCount():
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT COUNT(*) FROM Orders")
+        cs = cnn.cursor()
+        cs.execute(sql)
+        rst = cs.fetchall()
+        return rst  
     except Error as e:
         print("error")
         print(e)
