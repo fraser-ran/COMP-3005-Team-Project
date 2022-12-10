@@ -588,15 +588,15 @@ def checkSaleEmpty(isbn):
             cnn.close()
         print('done...')
 
-def makeSale(isbn, title, publisher, cost, num_sold, profits):
+def makeSale(isbn, cost, num_sold, profits):
     cnn = None
     fileName = 'SQL/books.db'
     try:
         if (checkSaleEmpty(isbn)):
             cnn = sqlite3.connect(fileName)
-            sql = ("INSERT INTO Sales(isbn, title, publisher, cost, num_sold, profits) VALUES(?, ?, ?, ?, ?, ?)")
+            sql = ("INSERT INTO Sales(isbn, cost, num_sold, profits) VALUES(?, ?, ?, ?)")
             cs = cnn.cursor()
-            cs.execute(sql, (isbn, title, publisher, cost, num_sold, profits))
+            cs.execute(sql, (isbn, cost, num_sold, profits))
             cnn.commit()
             print('sale added...')
         

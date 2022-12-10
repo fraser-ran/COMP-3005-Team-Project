@@ -58,11 +58,35 @@ pageTitle.config(font =("Arial", 12))
 
 priceTitle = Label(window, text = "Price = $")
 priceTitle.config(font =("Arial", 12))  
+
+stockTitle = Label(window, text = "Quantity = ")
+stockTitle.config(font =("Arial", 12))
+
+stockBox = Entry(width=10)
+
 buyBtn = Button(window, text = 'Add to Cart', bd = '3',command=lambda: buyButton())
 buyBtn.config(height=2,width=10)
 
+editStockBtn = Button(window, text = 'Update Quantity', bd = '3',command=lambda: editStock())
+editStockBtn.config(height=2,width=15)
+
+deleteBtn = Button(window, text = 'Delete Book', bd = '3',command=lambda: removeBook())
+deleteBtn.config(height=2,width=15)
+
+titleBox = Entry(width=50)
+isbnBox = Entry(width=50)
+publisherBox = Entry(width=50)
+authorBox = Entry(width=50)
+genreBox = Entry(width=50)
+pageBox = Entry(width=50)
+priceBox = Entry(width=50)
+
 def search():
-    searchList = searchBook(box.get(), drop.get().lower())
+
+    if(drop.get().lower() == "author"):
+        searchList = searchBook(box.get(), "author_name")
+    else:
+        searchList = searchBook(box.get(), drop.get().lower())
     list.delete(0,END)
     for i in range(0,len(searchList)):
         list.insert(i,searchList[i])
@@ -70,57 +94,43 @@ def search():
 
 
 def select(event):
-    
+    global currentUser
+    print(currentUser)
     list.place_forget()
     drop.place_forget()
     btn.place_forget()
     box.place_forget()
     browseLabel.place_forget()
     title.pack_forget()
-    
-    
     bookTitle.config(text = list.get(ACTIVE)[1] ,font =("Arial", 14))
-
-    
     isbnTitle.config(text = "ISBN = "+str(list.get(ACTIVE)[0]),font =("Arial", 12))
-
-    
     publisherTitle.config(text = "Publisher = "+list.get(ACTIVE)[2],font =("Arial", 12))
-
-    
     authorTitle.config(text = "Author = "+list.get(ACTIVE)[3],font =("Arial", 12))
-
-    
     genreTitle.config(text = "Genre = "+list.get(ACTIVE)[4],font =("Arial", 12))
-
-    
     pageTitle.config(text = "Number of Pages = "+str(list.get(ACTIVE)[5]),font =("Arial", 12))
-
-    
     priceTitle.config(text = "Price = $"+str(list.get(ACTIVE)[6]),font =("Arial", 12))  
+    
     bookTitle.pack()
-
-    
     isbnTitle.place(x=250, y=50)
-
-    
     publisherTitle.place(x=250, y=100)
-
-    
     authorTitle.place(x=250, y=150)
-
-    
     genreTitle.place(x=250, y=200)
-
-    
     pageTitle.place(x=250, y=250)
-
-    
     priceTitle.place(x=250, y=300)
-
     
-    buyBtn.place(x=250,y=350)   
-
+    buyBtn.place(x=250,y=400)
+    if(len(currentUser)!=0):  
+        if(currentUser[0][0] == 0):
+            stockTitle.config(text = "Quantity = "+str(searchBook(list.get(ACTIVE)[0],"isbn")[0][7]),font =("Arial", 12))
+            stockTitle.place(x=250,y=350)
+        else:
+            stockTitle.config(text = "Quantity = ",font =("Arial", 12))
+            stockTitle.place(x=250,y=350)
+            stockBox.delete(0, 'end')
+            stockBox.insert(END,searchBook(list.get(ACTIVE)[0],"isbn")[0][7])
+            stockBox.place(x=330,y=353)
+            editStockBtn.place(x=350,y=400)  
+            deleteBtn.place(x=480,y=400)
     print(list.get(ACTIVE))
 
 
@@ -141,6 +151,7 @@ def backButton():
         logout.place(x=10,y=10)
         viewCartBtn.place(x=80,y=10)
         editBankBtn.place(x=10,y=80)
+        addBookBtn.place(x=10,y=110)
     else:
         reg.place(x=10,y=10)
         login.place(x=80,y=10)
@@ -173,9 +184,11 @@ postalBox = Entry(width=50)
 signinBtn = Button(window, text = 'Sign In', bd = '3',command=lambda: signin())
 signinBtn.config(height=2,width=10)
 
-signupBtn = Button(window, text = 'Sign Up', bd = '3',command=lambda: signup())
+signupBtn = Button(window, text = 'Sign Up', bd = '3',command=lambda: signup(0))
 signupBtn.config(height=2,width=10)
 
+signupAdminBtn = Button(window, text = 'Sign Up as Admin', bd = '3',command=lambda: signup(1))
+signupAdminBtn.config(height=2,width=20)
 
 emailTitle = Label(window, text = "Email: ")
 emailTitle.config(font =("Arial", 12))
@@ -205,6 +218,9 @@ countryDrop = ttk.Combobox(
 
 viewCartBtn = Button(window, text = 'View Cart', bd = '3',command=lambda: viewCart())
 editBankBtn = Button(window, text = 'Edit Bank Info', bd = '3',command=lambda: editBankButton())
+addBookBtn = Button(window, text = 'Add Book', bd = '3',command=lambda: addButton())
+confirmAddBtn = Button(window, text = 'Add Book', bd = '3',command=lambda: addBookButton())
+confirmAddBtn.config(height=2,width=10)
 
 def loginButton():
     clearGUI()
@@ -231,6 +247,7 @@ def registerButton():
     postalBox.place(x=305, y=403)
     postalTitle.place(x=200,y=403)
     signupBtn.place(x=250,y=445)
+    signupAdminBtn.place(x=350,y=445)
 
 def logoutButton():
     global currentUser, signedIn, cart
@@ -251,15 +268,17 @@ def signin():
         signedIn = True
         backButton()
 
-def signup():
-    addCustomer(0,usernameBox.get(),emailBox.get(),passwordBox.get(),addressBox.get(),countryDrop.get(),cityBox.get(),postalBox.get(),None,None,None,None,None,None,None)
+def signup(num):
+    addCustomer(num,usernameBox.get(),emailBox.get(),passwordBox.get(),addressBox.get(),countryDrop.get(),cityBox.get(),postalBox.get(),None,None,None,None,None,None,None)
     global currentUser, signedIn
     currentUser = searchCustomerByUserName(usernameBox.get())
     signedIn = True
     backButton()
-    
+
+
 def clearGUI():
     bookTitle.pack_forget()
+    bookTitle.place_forget()
     isbnTitle.place_forget()
     publisherTitle.place_forget()
     authorTitle.place_forget()
@@ -314,14 +333,93 @@ def clearGUI():
     confirmEditBankBtn.place_forget()
     editBankBtn.place_forget()
     checkoutTitle.place_forget()
+    signupAdminBtn.place_forget()
+    stockTitle.place_forget()
+    stockBox.place_forget()
+    editStockBtn.place_forget()
+    deleteBtn.place_forget()
+    addBookBtn.place_forget()
+    confirmAddBtn.place_forget()
+    titleBox.place_forget()
+    isbnBox.place_forget()
+    publisherBox.place_forget()
+    authorBox.place_forget()
+    genreBox.place_forget()
+    pageBox.place_forget()
+    priceBox.place_forget()
     
 def buyButton():
     if(searchBook(list.get(ACTIVE)[0],"isbn")[0][7]>0):
         cart.append(searchBook(list.get(ACTIVE)[0],"isbn"))
         updateQuantity(list.get(ACTIVE)[0],searchBook(list.get(ACTIVE)[0],"isbn")[0][7]-1)
+        search()
+        if(currentUser[0][0] == 0):
+            stockTitle.config(text = "Quantity = "+str(searchBook(list.get(ACTIVE)[0],"isbn")[0][7]),font =("Arial", 12))
+            stockTitle.place(x=250,y=350)
+        else:
+            stockTitle.config(text = "Quantity = ",font =("Arial", 12))
+            stockTitle.place(x=250,y=350)
+            stockBox.insert(END,searchBook(list.get(ACTIVE)[0],"isbn")[0][7])
+            stockBox.place(x=300,y=250)
     else:
         print("Book is out of Stock")
     #print(cart)
+
+def editStock():
+    updateQuantity(searchBook(list.get(ACTIVE)[0],"isbn")[0][0],stockBox.get())
+    search()
+    stockBox.delete(0, 'end')
+    stockBox.insert(END,searchBook(list.get(ACTIVE)[0],"isbn")[0][7])
+
+
+def removeBook():
+    deleteBook(list.get(ACTIVE)[0])
+    clearGUI()
+    bookTitle.config(text = "THIS BOOK HAS BEEN DELETED" ,font =("Arial", 14))
+    bookTitle.pack()
+    search()
+    bookTitle.after(1000,lambda: backButton())
+
+def addButton():
+    clearGUI()
+    bookTitle.config(text = "Title = ",font =("Arial", 12))
+    isbnTitle.config(text = "ISBN = ",font =("Arial", 12))
+    publisherTitle.config(text = "Publisher = ",font =("Arial", 12))
+    authorTitle.config(text = "Author = ",font =("Arial", 12))
+    genreTitle.config(text = "Genre = ",font =("Arial", 12))
+    pageTitle.config(text = "Number of Pages = ",font =("Arial", 12))
+    priceTitle.config(text = "Price = $",font =("Arial", 12))  
+    stockTitle.config(text = "Quantity = ",font =("Arial", 12))
+
+    bookTitle.place(x=150,y=50)
+    isbnTitle.place(x=150, y=100)
+    publisherTitle.place(x=150, y=150)
+    authorTitle.place(x=150, y=200)
+    genreTitle.place(x=150, y=250)
+    pageTitle.place(x=150, y=300)
+    priceTitle.place(x=150, y=350)
+    stockTitle.place(x=150,y=400)
+
+    titleBox.place(x=300,y=53)
+    isbnBox.place(x=300,y=103)
+    publisherBox.place(x=300,y=153)
+    authorBox.place(x=300,y=203)
+    genreBox.place(x=300,y=253)
+    pageBox.place(x=300,y=303)
+    priceBox.place(x=300,y=353)
+    stockBox.insert(END,"")
+    stockBox.place(x=230,y=403)
+    confirmAddBtn.place(x=400,y=450)
+
+
+def addBookButton():
+    
+    insertBook(isbnBox.get(),titleBox.get(),publisherBox.get(),authorBox.get(),genreBox.get(),pageBox.get(),priceBox.get(),stockBox.get())
+    clearGUI()
+    bookTitle.config(text = "THIS BOOK HAS BEEN ADDED" ,font =("Arial", 14))
+    bookTitle.pack()
+    search()
+    bookTitle.after(1000,lambda: backButton())
 
 cartDisplay = Listbox(window, width=50,height=20)
 

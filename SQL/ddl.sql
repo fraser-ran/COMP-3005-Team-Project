@@ -52,13 +52,9 @@ CREATE TABLE Orders(
 
 CREATE TABLE Sales(
     isbn int,
-    title varchar(255)
-    publisher varchar(255),
     cost int,
     num_sold int,
     profits int,
     PRIMARY KEY(isbn),
     FOREIGN KEY (isbn) REFERENCES Book(isbn),
-    FOREIGN KEY (title) REFERENCES Book(title),
-    FOREIGN KEY (publisher) REFERENCES Book(publisher)
 );
