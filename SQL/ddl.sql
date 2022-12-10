@@ -16,6 +16,7 @@ CREATE TABLE Book(
     genre varchar(255),
     num_pages int,
     price int,
+    quantity int,
     PRIMARY KEY(isbn),
     FOREIGN KEY (publisher) REFERENCES Publisher(name)
 );
@@ -42,11 +43,22 @@ CREATE TABLE Users(
 CREATE TABLE Orders(
     o_id int,
     u_id int,
-    p_id int,
     date DATE,
     time TIME,
     cost int,
     PRIMARY KEY(o_id),
-    FOREIGN KEY (u_id) REFERENCES Users(username),
-    FOREIGN KEY (p_id) REFERENCES Publisher(p_id)
+    FOREIGN KEY (u_id) REFERENCES Users(username)
+);
+
+CREATE TABLE Sales(
+    isbn int,
+    title varchar(255)
+    publisher varchar(255),
+    cost int,
+    num_sold int,
+    profits int,
+    PRIMARY KEY(isbn),
+    FOREIGN KEY (isbn) REFERENCES Book(isbn),
+    FOREIGN KEY (title) REFERENCES Book(title),
+    FOREIGN KEY (publisher) REFERENCES Book(publisher)
 );

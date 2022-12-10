@@ -4,7 +4,7 @@ import sqlite3
 from sqlite3 import Error
 
 from sqlFunc import *
-
+from datetime import datetime, date
 
 folderName = ""
 
@@ -23,6 +23,7 @@ browseLabel.place(x=10,y=50)
 
 currentUser = []
 signedIn = False
+cart = []
 drop = ttk.Combobox(
     state="readonly",
     values=["Title", "Author", "ISBN", "Genre", "Publisher"]
@@ -57,7 +58,7 @@ pageTitle.config(font =("Arial", 12))
 
 priceTitle = Label(window, text = "Price = $")
 priceTitle.config(font =("Arial", 12))  
-buyBtn = Button(window, text = 'Buy', bd = '3',command=lambda: search())
+buyBtn = Button(window, text = 'Add to Cart', bd = '3',command=lambda: buyButton())
 buyBtn.config(height=2,width=10)
 
 def search():
@@ -138,6 +139,8 @@ def backButton():
         reg.place_forget()
         login.place_forget()
         logout.place(x=10,y=10)
+        viewCartBtn.place(x=80,y=10)
+        editBankBtn.place(x=10,y=80)
     else:
         reg.place(x=10,y=10)
         login.place(x=80,y=10)
@@ -199,6 +202,10 @@ countryDrop = ttk.Combobox(
     state="readonly",
     values=["Canada", "United States","Mexico"]
 )
+
+viewCartBtn = Button(window, text = 'View Cart', bd = '3',command=lambda: viewCart())
+editBankBtn = Button(window, text = 'Edit Bank Info', bd = '3',command=lambda: editBankButton())
+
 def loginButton():
     clearGUI()
     usernameBox.place(x=285,y=55)
@@ -226,8 +233,12 @@ def registerButton():
     signupBtn.place(x=250,y=445)
 
 def logoutButton():
-    global currentUser, signedIn
+    global currentUser, signedIn, cart
+    
+    for i in range(0,len(cart)):
+        updateQuantity(cart[i][0][0],searchBook(cart[i][0][0],"isbn")[0][7]+1)
     currentUser = []
+    cart = []
     signedIn = False
     backButton()
 
@@ -280,6 +291,157 @@ def clearGUI():
     addressTitle.place_forget()
     addressBox.place_forget()
     box.place_forget()
+    viewCartBtn.place_forget()
+    cartDisplay.place_forget()
+    totalTitle.place_forget()
+    checkoutBtn.place_forget()
+    checkoutTitle.place_forget()
+    cardNumBox.place_forget()
+    cardNameBox.place_forget()
+    cardExpDateBox1.place_forget()
+    cardExpDateBox2.place_forget()
+    cardCCVBox.place_forget()
+    billstreetBox.place_forget()
+    billcityBox.place_forget()
+    billcountryDrop.place_forget()
+    cardNumTitle.place_forget()
+    cardNameTitle.place_forget()
+    cardExpDateTitle.place_forget()
+    cardCCVTitle.place_forget()
+    billstreetTitle.place_forget()
+    billcityTitle.place_forget()
+    billcountryTitle.place_forget()
+    confirmEditBankBtn.place_forget()
+    editBankBtn.place_forget()
+    checkoutTitle.place_forget()
     
+def buyButton():
+    if(searchBook(list.get(ACTIVE)[0],"isbn")[0][7]>0):
+        cart.append(searchBook(list.get(ACTIVE)[0],"isbn"))
+        updateQuantity(list.get(ACTIVE)[0],searchBook(list.get(ACTIVE)[0],"isbn")[0][7]-1)
+    else:
+        print("Book is out of Stock")
+    #print(cart)
+
+cartDisplay = Listbox(window, width=50,height=20)
+
+totalTitle = Label(window, text = "Total = $ ")
+
+checkoutBtn = Button(window, text = 'Check Out', bd = '3',command=lambda: checkoutButton())
+totalBackup = 0
+
+checkoutTitle = Label(window, text = "Successfully Checked Out")
+def viewCart():
+    clearGUI()
+    cartDisplay.place(x=250,y=50)
+    cartDisplay.delete(0,END)
+    total = 0
+    for i in range(0,len(cart)):
+        total = total + cart[i][6]
+        cartDisplay.insert(i,"Title: "+cart[i][1]+" Author: "+cart[i][3]+" Price: $"+str(cart[i][6]))
+
+    totalTitle.config(text = "Total = $ "+str(total),font =("Arial", 12))
+    totalTitle.place(x=250,y=400)
+    global totalBackup
+    totalBackup = total
+    checkoutBtn.place(x=350,y=400)
+
+def checkoutButton():
+    tempUser = checkIfCardisNull(currentUser[0][1])
+    orderCount = getOrderCount()
+    if(len(tempUser) == 0):
+        global cart
+        
+        
+            
+        addToOrder(orderCount[0][0], currentUser[0][1], totalBackup)
+        cart = []
+        checkoutTitle.config(text = "Successfully Checked Out, Order Number: "+str(orderCount[0][0]),font =("Arial", 12))
+        checkoutTitle.place(x=250,y=435)
+    elif(len(tempUser) == 1):
+        checkoutTitle.config(text = "Bank Information is Invalid",font =("Arial", 12))
+        checkoutTitle.place(x=250,y=435)
+    #for i in range(0,len(cart)):
+     #   total = total + cart[i][6]
+      #  cartDisplay.insert(i,"Title: "+cart[i][1]+" Author: "+cart[i][3]+" Price: $"+str(cart[i][6]))
+
+
+cardNumBox = Entry(width=50)
+cardNameBox = Entry(width=50)
+cardExpDateBox1 = Entry(width=5)
+cardExpDateBox2 = Entry(width=5)
+cardCCVBox = Entry(width=50)
+billstreetBox = Entry(width=50)
+billcityBox = Entry(width=50)
+billcountryDrop = ttk.Combobox(
+    state="readonly",
+    values=["Canada", "United States","Mexico"]
+)
+
+cardNumTitle = Label(window, text = "Card Number: ")
+cardNumTitle.config(font =("Arial", 12))
+
+cardNameTitle = Label(window, text = "Card Name: ")
+cardNameTitle.config(font =("Arial", 12))
+
+cardExpDateTitle = Label(window, text = "Expiry Date (YY/MM): ")
+cardExpDateTitle.config(font =("Arial", 12))
+
+cardCCVTitle = Label(window, text = "CCV: ")
+cardCCVTitle.config(font =("Arial", 12))
+
+billstreetTitle = Label(window, text = "Billing Street: ")
+billstreetTitle.config(font =("Arial", 12))
+
+billcityTitle = Label(window, text = "Billing City: ")
+billcityTitle.config(font =("Arial", 12))
+
+billcountryTitle = Label(window, text = "Billing Country: ")
+billcountryTitle.config(font =("Arial", 12))
+
+confirmEditBankBtn = Button(window, text = 'Confirm Changes', bd = '3',command=lambda: confirmEditBank())
+confirmEditBankBtn.config(height=2,width=15)
+
+def editBankButton():
+    clearGUI()
+    cardNumBox.place(x=290,y=105)
+    cardNumTitle.place(x=180,y=103)
+    cardNameBox.place(x=290,y=155)
+    cardNameTitle.place(x=180,y=153)
+    cardExpDateBox1.place(x=340,y=205)
+    cardExpDateBox2.place(x=380,y=205)
+    cardExpDateTitle.place(x=180,y=203)
+    cardCCVBox.place(x=285, y=253)
+    cardCCVTitle.place(x=180,y=253)
+    billstreetBox.place(x=285,y=303)
+    billstreetTitle.place(x=180,y=303)
+    billcityBox.place(x=285, y=353)
+    billcityTitle.place(x=180,y=353)
+    billcountryDrop.place(x=300, y=403)
+    billcountryTitle.place(x=180,y=403)
+    confirmEditBankBtn.place(x=300,y=440)
+
+checkoutTitle = Label(window, text = "Successfully Edited Bank Account")
+
+def confirmEditBank():
+    global currentUser
+    dateStr = '20'+str(cardExpDateBox2.get())+"-"+str(cardExpDateBox1.get())+"-01"
+    print(dateStr)
+    if(updateCardInfo(cardNumBox.get(),cardNameBox.get(),dateStr,cardCCVBox.get(),billstreetBox.get(),billcityBox.get(),billcountryDrop.get(),currentUser[0][1])):
+        checkoutTitle.config(text = "Successfully Edited Bank Account", font =("Arial", 12))
+        currentUser = searchCustomerByUserName(currentUser[0][1])
+        print(currentUser)
+    else:
+        checkoutTitle.config(text = "Invalid Bank Data, Re-Enter Bank Info", font =("Arial", 12))
+    checkoutTitle.place(x=425,y=460)
+
+
+def onClose():
+    for i in range(0,len(cart)):
+        updateQuantity(cart[i][0][0],searchBook(cart[i][0][0],"isbn")[0][7]+1)
+    window.destroy()
+
+
+window.protocol("WM_DELETE_WINDOW", onClose)
 
 window.mainloop()

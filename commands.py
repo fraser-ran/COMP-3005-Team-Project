@@ -11,7 +11,7 @@ fileName = 'SQL/books.db'
 
 try:
     cnn = sqlite3.connect(fileName)
-    sql = "ALTER TABLE Book ADD quantity INT;" # ? here is where we would make our sql commands
+    sql = "CREATE TABLE Sales(isbn int,title varchar(255),publisher varchar(255),cost int,num_sold int,profits int,PRIMARY KEY(isbn),FOREIGN KEY (isbn) REFERENCES Book(isbn),FOREIGN KEY (title) REFERENCES Book(title),FOREIGN KEY (publisher) REFERENCES Book(publisher));" # ? here is where we would make our sql commands
     cs = cnn.cursor()
     cs.executescript(sql)
     cnn.commit()
