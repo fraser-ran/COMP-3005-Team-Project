@@ -3,6 +3,18 @@ from sqlite3 import Error
 
 
 def insertBook(isbn, title, publisher, author_name, genre, num_pages, price, quantity):
+    """
+    This function will insert a book into the database
+    :param isbn: int
+    :param title: string
+    :param publisher: string
+    :param author_name: string
+    :param genre: string
+    :param num_pages: int
+    :param price: int
+    :param quantity: int
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -25,6 +37,11 @@ def insertBook(isbn, title, publisher, author_name, genre, num_pages, price, qua
         print('done...')
 
 def deleteBook(isbn):
+    """
+    This function will delete a book from the database
+    :param isbn: int
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -43,6 +60,18 @@ def deleteBook(isbn):
         print('done...')
     
 def updateBook(isbn, title, publisher, author_name, genre, num_pages, price, quantity):
+    """
+    This function will update a book in the database
+    :param isbn: int
+    :param title: string
+    :param publisher: string
+    :param author_name: string
+    :param genre: string
+    :param num_pages: int
+    :param price: int
+    :param quantity: int
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -61,6 +90,12 @@ def updateBook(isbn, title, publisher, author_name, genre, num_pages, price, qua
         print('done...')
 
 def searchBook(value, browseBy):
+    """
+    This function will search for a book in the database
+    :param value: string
+    :param browseBy: string
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -79,6 +114,11 @@ def searchBook(value, browseBy):
         print('done...')
 
 def searchBookByTitle(title):
+    """
+    This function will search for a book in the database
+    :param title: string
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -97,6 +137,11 @@ def searchBookByTitle(title):
         print('done...')
 
 def searchBookByAuthor(author_name):
+    """
+    This function will search for a book in the database
+    :param author_name: string
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -115,6 +160,11 @@ def searchBookByAuthor(author_name):
         print('done...')
 
 def searchBookByGenre(genre):
+    """
+    This function will search for a book in the database
+    :param genre: string
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -133,6 +183,11 @@ def searchBookByGenre(genre):
         print('done...')
 
 def searchBookByPublisher(publisher):
+    """
+    This function will search for a book in the database
+    :param publisher: string
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -151,6 +206,11 @@ def searchBookByPublisher(publisher):
         print('done...')
 
 def searchBookByPrice(price):
+    """
+    This function will search for a book in the database
+    :param price: int
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -169,6 +229,11 @@ def searchBookByPrice(price):
         print('done...')
 
 def searchBookByNumPages(num_pages):
+    """
+    This function will search for a book in the database
+    :param num_pages: int
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -187,6 +252,12 @@ def searchBookByNumPages(num_pages):
         print('done...')
 
 def searchBookByPriceRange(min, max):
+    """
+    This function will search for a book in the database
+    :param min: int
+    :param max: int
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -205,6 +276,10 @@ def searchBookByPriceRange(min, max):
         print('done...')
 
 def displayBooks():
+    """
+    This function will display all books in the database
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -224,7 +299,25 @@ def displayBooks():
 
 #@ param addCustomer (int, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, int, int, Date, varchar, varchar, varchar)
 def addCustomer(u_id, username, email, password, address, country, city, postalCode, cardName, cardNumber, ccv, exp_Date, billingStreet, billingCity, billingCountry):
-
+    """
+    This function will add a customer to the database
+    :param u_id: int
+    :param username: varchar
+    :param email: varchar
+    :param password: varchar
+    :param address: varchar
+    :param country: varchar
+    :param city: varchar
+    :param postalCode: varchar
+    :param cardName: varchar
+    :param cardNumber: int
+    :param ccv: int
+    :param exp_Date: Date
+    :param billingStreet: varchar
+    :param billingCity: varchar
+    :param billingCountry: varchar
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -243,6 +336,10 @@ def addCustomer(u_id, username, email, password, address, country, city, postalC
         print('done...')
 
 def searchCustomerByUserName(userName):
+    """ This function will search for a customer in the database
+    :param userName: varchar
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -261,6 +358,11 @@ def searchCustomerByUserName(userName):
         print('done...')
 
 def searchCustomerByEmail(email):
+    """ This function will search for a customer in the database
+    :param email: varchar
+    :return: None
+    """
+
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -279,6 +381,15 @@ def searchCustomerByEmail(email):
         print('done...')
 
 def addPublisher(p_id, name, address, email, phone_num, bankAccount):
+    """ This function will add a publisher to the database
+    :param p_id: int
+    :param name: varchar
+    :param address: varchar
+    :param email: varchar
+    :param phone_num: varchar
+    :param bankAccount: varchar
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     print("in add publisher")
@@ -299,6 +410,11 @@ def addPublisher(p_id, name, address, email, phone_num, bankAccount):
 
 
 def searchPublisherByName(name):
+    """ 
+    This function will search for a publisher in the database
+    :param name: varchar
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -317,6 +433,12 @@ def searchPublisherByName(name):
         print('done...')
 
 def searchPublisherByEmail(email):
+    """
+    This function will search for a publisher in the database
+    :param email: varchar
+    :return: None
+    """
+
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -335,6 +457,10 @@ def searchPublisherByEmail(email):
         print('done...')
 
 def searchLikeName(likeName):
+    """ This function will search for a book in the database
+    :param likeName: varchar
+    :return: None
+    """
 
     cnn = None
     fileName = 'SQL/books.db'
@@ -355,7 +481,11 @@ def searchLikeName(likeName):
         print('done...')
 
 def searchLikeAuthor(likeAuthor):
-
+    """
+    This function will search for a book in the database
+    :param likeAuthor: varchar
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -375,7 +505,12 @@ def searchLikeAuthor(likeAuthor):
         print('done...')
 
 def searchLikeGenre(likeGenre):
-    
+        """ 
+        This function will search for a book in the database
+        :param likeGenre: varchar
+        :return: None
+        """
+
         cnn = None
         fileName = 'SQL/books.db'
         try:
@@ -395,6 +530,11 @@ def searchLikeGenre(likeGenre):
             print('done...')
 
 def getPriceIsbn(isbn):
+    """ 
+    This function will get the price of a book by isbn
+    :param isbn: int
+    :return: price tuple
+    """
     cnn = None
     fileName = 'SQL/books.db'
     price =0
@@ -416,6 +556,11 @@ def getPriceIsbn(isbn):
     return price
 
 def getListPricesIsbn(isbnList):
+    """
+    This function will get the price of a book by isbn
+    :param isbn: int
+    :return: price tuple list
+    """
     cnn = None
     fileName = 'SQL/books.db'
     price =0
@@ -440,6 +585,13 @@ def getListPricesIsbn(isbnList):
     return priceList
 
 def addToOrder(o_id, u_id, cost):
+    """
+    This function will add an order to the database
+    :param o_id: int
+    :param u_id: int
+    :param cost: float
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -458,6 +610,11 @@ def addToOrder(o_id, u_id, cost):
         print('done...')
 
 def checkIfCardisNull(name):
+    """     
+    This function will check if the card info is null
+    :param name: varchar
+    :return: the Users info if the cardInfo is null
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -476,6 +633,18 @@ def checkIfCardisNull(name):
         print('done...')
 
 def updateCardInfo(cardNumber, cardName, cardExp, cardCcv, billingStreet, billingCity , billingCountry, username):
+    """
+    This function will update the card info
+    :param cardNumber: int
+    :param cardName: varchar
+    :param cardExp: varchar
+    :param cardCcv: int
+    :param billingStreet: varchar
+    :param billingCity: varchar
+    :param billingCountry: varchar
+    :param username: varchar
+    :return: true if card is updated false if not
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -496,6 +665,12 @@ def updateCardInfo(cardNumber, cardName, cardExp, cardCcv, billingStreet, billin
         print('done...')
 
 def updateQuantity(isbn, quantity):
+    """
+    This function will update the quantity of a book
+    :param isbn: int
+    :param quantity: int
+    :return: None
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -514,6 +689,11 @@ def updateQuantity(isbn, quantity):
         print('done...')
 
 def getOrderCount():
+    """
+    This function will get the order count
+    :return: order count
+    """
+
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -532,6 +712,10 @@ def getOrderCount():
         print('done...')
 
 def getOrders():
+    """ 
+    This function will get all the orders
+    :return: all the orders
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -550,6 +734,11 @@ def getOrders():
         print('done...')
 
 def getSalesByIsbn(isbn):
+    """ 
+    This function will get the sales by isbn
+    :param isbn: int
+    :return: the sales by isbn
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -568,6 +757,12 @@ def getSalesByIsbn(isbn):
         print('done...')
 
 def checkSaleEmpty(isbn):
+    """
+    This function will check if the sale is empty
+    :param isbn: int
+    :return: true if empty false if not
+    """
+
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -589,12 +784,19 @@ def checkSaleEmpty(isbn):
         print('done...')
 
 def makeSale(isbn, cost):
+    """
+    This function will make a sale if that book has not been sold before, but if so then 
+    :param isbn: int
+    :param cost: float
+    :return: None
+    """
+
     cnn = None
     fileName = 'SQL/books.db'
     try:
         if (checkSaleEmpty(isbn)):
             cnn = sqlite3.connect(fileName)
-            sql = ("INSERT INTO Sales(isbn, title, publisher, cost, num_sold, profits) VALUES(?, ?, ?, ?, ?, ?)")
+            sql = ("INSERT INTO Sales(isbn, cost, num_sold, profits) VALUES(?, ?, ?, ?)")
             cs = cnn.cursor()
             cs.execute(sql, (isbn, cost, 1, cost*1))
             cnn.commit()
@@ -616,6 +818,12 @@ def makeSale(isbn, cost):
         print('done...')
 
 def returnProfits(value, searchBy):
+    """
+    This function will return the profits and number of books sold
+    :param value: string
+    :param searchBy: string
+    :return: the profits and number of books sold
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
@@ -635,6 +843,11 @@ def returnProfits(value, searchBy):
         print('done...')
 
 def searchOrder(id):
+    """ 
+    This function will get the Order by Order number
+    :param isbn: Order ID
+    :return: Order status
+    """
     cnn = None
     fileName = 'SQL/books.db'
     try:
