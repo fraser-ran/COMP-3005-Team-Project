@@ -345,7 +345,7 @@ def searchLikeName(likeName):
         cs = cnn.cursor()
         cs.execute(sql)
         rst = cs.fetchall()
-        print(rst)
+        return rst
     except Error as e:
         print("error")
         print(e)
@@ -360,12 +360,12 @@ def searchLikeAuthor(likeAuthor):
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        line = ("SELECT * FROM Book WHERE author LIKE " + "'%" + likeAuthor + "%'")
+        line = ("SELECT * FROM Book WHERE author_name LIKE " + "'%" + likeAuthor + "%'")
         sql = line
         cs = cnn.cursor()
         cs.execute(sql)
         rst = cs.fetchall()
-        print(rst)
+        return rst
     except Error as e:
         print("error")
         print(e)
@@ -385,7 +385,7 @@ def searchLikeGenre(likeGenre):
             cs = cnn.cursor()
             cs.execute(sql)
             rst = cs.fetchall()
-            print(rst)
+            return rst
         except Error as e:
             print("error")
             print(e)
@@ -556,7 +556,7 @@ def getSalesByIsbn(isbn):
         cnn = sqlite3.connect(fileName)
         sql = ("SELECT * FROM Sales WHERE isbn = ?")
         cs = cnn.cursor()
-        cs.execute(sql, (isbn))
+        cs.execute(sql, (isbn,))
         rst = cs.fetchall()
         return rst  
     except Error as e:
@@ -574,7 +574,7 @@ def checkSaleEmpty(isbn):
         cnn = sqlite3.connect(fileName)
         sql = ("SELECT * FROM Sales WHERE isbn = ?")
         cs = cnn.cursor()
-        cs.execute(sql, (isbn))
+        cs.execute(sql, (isbn,))
         rst = cs.fetchall()
         if len(rst) == 0:
             return True
@@ -588,23 +588,23 @@ def checkSaleEmpty(isbn):
             cnn.close()
         print('done...')
 
-def makeSale(isbn, cost, num_sold, profits):
+def makeSale(isbn, cost):
     cnn = None
     fileName = 'SQL/books.db'
     try:
         if (checkSaleEmpty(isbn)):
             cnn = sqlite3.connect(fileName)
-            sql = ("INSERT INTO Sales(isbn, cost, num_sold, profits) VALUES(?, ?, ?, ?)")
+            sql = ("INSERT INTO Sales(isbn, title, publisher, cost, num_sold, profits) VALUES(?, ?, ?, ?, ?, ?)")
             cs = cnn.cursor()
-            cs.execute(sql, (isbn, cost, num_sold, profits))
+            cs.execute(sql, (isbn, cost, 1, cost*1))
             cnn.commit()
             print('sale added...')
         
         else:
             cnn = sqlite3.connect(fileName)
-            sql = ("UPDATE Sales SET num_sold = ?, profits = ? WHERE isbn = ?")
+            sql = ("UPDATE Sales SET num_sold = num_sold + 1, profits = (num_sold+1)*cost WHERE isbn = ?")
             cs = cnn.cursor()
-            cs.execute(sql, (num_sold, profits, isbn))
+            cs.execute(sql, (isbn,))
             cnn.commit()
             print('sale updated...')
     except Error as e:
@@ -620,11 +620,12 @@ def returnProfits(value, searchBy):
     fileName = 'SQL/books.db'
     try:
         cnn = sqlite3.connect(fileName)
-        sql = ("SELECT SUM(profits) FROM Sales WHERE " + searchBy + " = ?, INNER JOIN Book ON Sales.isbn = Book.isbn")
+        sql = ("SELECT SUM(profits), SUM(num_sold) FROM Sales INNER JOIN Book ON Sales.isbn = Book.isbn WHERE "+searchBy+" = ?")
         cs = cnn.cursor()
-        cs.execute(sql, (value))
+        cs.execute(sql, (value,))
         rst = cs.fetchall()
-        return rst  
+        print(rst[0])
+        return rst[0]
     except Error as e:
         print("error")
         print(e)
@@ -633,3 +634,21 @@ def returnProfits(value, searchBy):
             cnn.close()
         print('done...')
 
+def searchOrder(id):
+    cnn = None
+    fileName = 'SQL/books.db'
+    try:
+        cnn = sqlite3.connect(fileName)
+        sql = ("SELECT Users.username, Users.country, Users.city FROM Orders INNER JOIN Users ON Orders.u_id = Users.username WHERE o_id = ?")
+        cs = cnn.cursor()
+        cs.execute(sql, (id,))
+        rst = cs.fetchall()
+        print(rst)
+        return rst
+    except Error as e:
+        print("error")
+        print(e)
+    finally:
+        if cnn:
+            cnn.close()
+        print('done...')
