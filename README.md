@@ -1,5 +1,6 @@
 # COMP-3005-Team-Project
 Author: Fraser Rankin (SN: 101192297), Vashiran Vaitheeswaran (SN: 101183346), Wei-Da Tseng (SN: 101196640)
+
 Purpose: Create a bookstore application based on a given problem statement using python and sqlite 3
 
 Must Need: Python 3, sqlite 3, and postgresSQL
