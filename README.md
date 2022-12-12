@@ -12,3 +12,7 @@ Instructions:
 2. initialize the database by running the statement "database.py"
 3. (RECCOMENDED) Fill your database with books and publishers by running the statement "main.py"
 4. start the application by running the statement "application.py"
+
+
+
+Note: Just like a real store, you must edit your bank information before checking out for the first time
