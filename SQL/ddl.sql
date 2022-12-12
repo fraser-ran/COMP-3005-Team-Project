@@ -56,5 +56,5 @@ CREATE TABLE Sales(
     num_sold int,
     profits int,
     PRIMARY KEY(isbn),
-    FOREIGN KEY (isbn) REFERENCES Book(isbn),
+    FOREIGN KEY (isbn) REFERENCES Book(isbn)
 );
