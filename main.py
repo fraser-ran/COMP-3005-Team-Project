@@ -9,7 +9,7 @@ from sqlFunc import *
 
 
 if __name__ == "__main__":
-    # addPublisher(1, "test Publisher", "test address","emai", "number","1234")
+
     insertBook(3, "Harry Potter: Philosopher's Stone","Bloomsbury", "J. K Rowling ", "Fantasy", 233, 12,25)
     insertBook(4, "Harry Potter: Chamber of Secrets","Bloomsbury", "J. K Rowling ", "Fantasy", 251, 12,25)
     insertBook(5, "Harry Potter: Prisoner of Azkaban","Bloomsbury", "J. K Rowling ", "Fantasy", 448, 15,25)
@@ -71,11 +71,8 @@ if __name__ == "__main__":
     insertBook(63, "A Dance with Dragons", "Bantam Books", "George R. R. Martin", "Fantasy", 864, 30,25)
     insertBook(64, "The Winds of Winter", "Bantam Books", "George R. R. Martin", "Fantasy", 864, 30,25)
     insertBook(65, "A Dream of Spring", "Bantam Books", "George R. R. Martin", "Fantasy", 864, 30,25)
-
-    #insertBook(68, "title2","test Publisher", "author", "action", 200, 20,10)
-    #print(searchLikeName('book'))
-    # print(getPriceIsbn(2))
-    
+    insertBook(66, "LeBron James Auto-Biography", "Los Angelos Lakers", "LeBron James", "Sports", 1000, 30,25)
+    insertBook(67, "James Harden Auto-Biography", "Houston Rockets", "James Harden", "Sports", 1000, 30,25)
     pass
 
 
