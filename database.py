@@ -21,8 +21,7 @@ try:
     rst = cs.fetchall()
     print(rst)
 except Error as e:
-    print("error")
-    print(e)
+    print()
 finally:
     if cnn:
         cnn.close()
