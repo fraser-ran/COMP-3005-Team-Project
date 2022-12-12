@@ -10,6 +10,25 @@ from sqlFunc import *
 
 if __name__ == "__main__":
 
+    addPublisher(1,"Santa inc", "North Pole", "santa@hohoho.com", "123-456-7890", 1 )
+    addPublisher(2,"Bloomsbury", "London", "bloomsbury@email.com", "123-456-7892", 2 )
+    addPublisher(3,"Allen & Unwin", "Sydney", "allenunwin@email.com", "123-456-7893", 3 )
+    addPublisher(4,"Pan Books", "London", "panbooks@email.com", "123-456-7894", 4 )
+    addPublisher(5,"Penguin Books", "London", "penguin@email.com", "123-456-7895", 5 )
+    addPublisher(6,"Disney-Hyperion", "New York", "disney@email.com", "123-456-7896", 6 )
+    addPublisher(7,"Scholastic", "New York", "scholastic@email.com", "123-456-7897", 7 )
+    addPublisher(8,"Delacourte Press", "New York", "delacourte@email.com", "123-456-7898", 8 )
+    addPublisher(9, "Chillton Books", "London", "chillton@email.com", "123-456-7899", 9 )
+    addPublisher(10, "Macmillan", "London", "macmillan@email.com", "123-456-7010", 10 )
+    addPublisher(11, "HarperCollins", "London", "harpercollins@email.com", "123-456-7011", 11 )
+    addPublisher(12, "Puffin Books", "London", "puffin@email.com", "123-456-7012", 12 )
+    addPublisher(13, "Little, Brown and Company", "London", "lbc@email.com ", "123-456-7013", 13 )
+    addPublisher(14, "The Hatchet Group", "London", "hatchet@email.com", "123-456-7014", 14 )
+    addPublisher(15, "Orion Children's Books", "London", "orion@email.com", "123-456-7015", 15 )
+    addPublisher(16, "Bantam Books", "London", "bantam@email.com" , "123-456-7016", 16 )
+    addPublisher(17, "Los Angeles Lakers", "Los Angeles", "lalakers@email.com", "123-456-7017", 17 )
+    addPublisher(18, 'Houston Rockets', 'Houston', 'hrockets@nba.com', '123-456-7018', 18)
+
     insertBook(3, "Harry Potter: Philosopher's Stone","Bloomsbury", "J. K Rowling ", "Fantasy", 233, 12,25)
     insertBook(4, "Harry Potter: Chamber of Secrets","Bloomsbury", "J. K Rowling ", "Fantasy", 251, 12,25)
     insertBook(5, "Harry Potter: Prisoner of Azkaban","Bloomsbury", "J. K Rowling ", "Fantasy", 448, 15,25)
