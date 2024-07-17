@@ -11,7 +11,7 @@ Instructions:
 
 1. navigate to \COMP-3005-Team-Project in command line
 2. initialize the database by running the statement "database.py"
-3. (RECCOMENDED) Fill your database with books and publishers by running the statement "main.py"
+3. (RECOMMENDED) Fill your database with books and publishers by running the statement "main.py"
 4. start the application by running the statement "application.py"
 
 
